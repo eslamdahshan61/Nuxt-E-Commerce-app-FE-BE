@@ -7,7 +7,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-rootpassword}
       MYSQL_DATABASE: ${DB_NAME:-ecommerce}
-      MYSQL_USER: ${DB_USER:-ecommerce}
+      MYSQL_USER: ecommerce
       MYSQL_PASSWORD: ${DB_PASSWORD:-password}
     ports:
       - "${DB_PORT:-3306}:3306"
@@ -49,7 +49,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: development
-      DATABASE_URL: mysql://${DB_USER:-ecommerce}:${DB_PASSWORD:-password}@mysql:3306/${DB_NAME:-ecommerce}
+      DATABASE_URL: mysql://ecommerce:${DB_PASSWORD:-password}@mysql:3306/${DB_NAME:-ecommerce}
       REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
       JWT_EXPIRATION: ${JWT_EXPIRATION:-24h}
@@ -64,7 +64,7 @@ services:
         condition: service_healthy
     networks:
       - ecommerce-network
-    command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run dev -- --host 0.0.0.0"
+    command: sh -c "npx prisma generate && npx prisma migrate deploy && npx prisma db seed && npm run dev -- --host 0.0.0.0"
     profiles:
       - dev
 
@@ -79,7 +79,7 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      DATABASE_URL: mysql://${DB_USER:-ecommerce}:${DB_PASSWORD:-password}@mysql:3306/${DB_NAME:-ecommerce}
+      DATABASE_URL: mysql://ecommerce:${DB_PASSWORD:-password}@mysql:3306/${DB_NAME:-ecommerce}
       REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
       JWT_EXPIRATION: ${JWT_EXPIRATION:-24h}
@@ -90,6 +90,7 @@ services:
         condition: service_healthy
     networks:
       - ecommerce-network
+    command: sh -c "npx prisma generate && npx prisma migrate deploy && npx prisma db seed && node .output/server/index.mjs"
     profiles:
       - prod
 
