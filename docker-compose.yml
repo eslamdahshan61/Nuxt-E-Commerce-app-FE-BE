@@ -47,6 +47,7 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+      - "5555:5555"
     environment:
       NODE_ENV: development
       DATABASE_URL: mysql://ecommerce:${DB_PASSWORD:-password}@mysql:3306/${DB_NAME:-ecommerce}
@@ -77,6 +78,7 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+      - "5555:5555"
     environment:
       NODE_ENV: production
       DATABASE_URL: mysql://ecommerce:${DB_PASSWORD:-password}@mysql:3306/${DB_NAME:-ecommerce}

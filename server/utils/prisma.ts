@@ -20,7 +20,7 @@ const prismaClientSingleton = () => {
 
   client.$on('query', (e: any) => {
     if (e.duration > 100) {
-      console.warn('⚠️  Slow query detected:', {
+      console.warn('low query detected:', {
         query: e.query.substring(0, 200) + (e.query.length > 200 ? '...' : ''),
         duration: `${e.duration}ms`,
         timestamp: new Date().toISOString(),
@@ -29,14 +29,14 @@ const prismaClientSingleton = () => {
   });
 
   client.$on('error', (e: any) => {
-    console.error('❌ Prisma Error:', {
+    console.error('Prisma Error:', {
       message: e.message,
       timestamp: new Date().toISOString(),
     });
   });
 
   client.$on('warn', (e: any) => {
-    console.warn('⚠️  Prisma Warning:', {
+    console.warn('Prisma Warning:', {
       message: e.message,
       timestamp: new Date().toISOString(),
     });

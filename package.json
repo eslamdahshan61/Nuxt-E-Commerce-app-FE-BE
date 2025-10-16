@@ -15,7 +15,7 @@
     "prisma:migrate:create": "prisma migrate dev --create-only",
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:migrate:status": "prisma migrate status",
-    "prisma:studio": "node --experimental-wasm-reftypes ./node_modules/.bin/prisma studio",
+    "prisma:studio": "prisma studio",
     "prisma:seed": "tsx prisma/seed.ts"
   },
   "prisma": {
