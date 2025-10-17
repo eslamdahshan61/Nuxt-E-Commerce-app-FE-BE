@@ -116,6 +116,7 @@ npx prisma db seed
 npx prisma studio
 ```
 
+
 ## 🚀 Running Locally (Without Docker)
 
 ### 1. Install Dependencies
@@ -234,6 +235,19 @@ The database is automatically seeded with:
 ├── Dockerfile.dev        # Development Docker image
 └── README.md             # This file
 ```
+
+## 🔁 Recursive Product Count (Event‑Driven)
+
+This project uses an event‑driven cache invalidation strategy to keep each category’s "recursive product count" accurate across the category tree.
+
+- **What it does**: When products or categories change, we invalidate the cached count for the affected category and all of its ancestors so the next read recomputes a fresh total.
+- **Why**: Categories form a tree. A product added to a leaf should update counts all the way up the chain (e.g., Subcategory → Parent → Root).
+- **How**:
+  - Events are emitted on create/update/delete for categories and products.
+  - Each event calls a recursive invalidation function that walks `parentId` pointers to the root and clears relevant Redis keys.
+  - Cache key format: `category:{categoryId}:recursive-product-count`.
+
+Key implementation: see `server/utils/events.ts` (e.g., `emitProductCreated`, `emitProductUpdated`, `emitProductDeleted`, and `invalidateCategoryAndAncestors`).
 
 ## 🔧 Development Commands
 
