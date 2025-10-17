@@ -16,10 +16,10 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:migrate:status": "prisma migrate status",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "tsx prisma/seed.ts"
+    "prisma:seed": "npx --yes tsx prisma/seed.ts"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "npx --yes tsx prisma/seed.ts"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -45,12 +45,12 @@
     "vue": "^3.5.22",
     "vue-router": "^4.5.1",
     "vuetify": "^3.10.5",
+    "tsx": "^4.20.6",
     "yup": "^1.7.1",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^24.7.2",
-    "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.1.1"
   }

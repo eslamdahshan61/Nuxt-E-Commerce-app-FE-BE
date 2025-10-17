@@ -21,7 +21,7 @@ export default defineNuxtConfig({
        
         jwtSecret: process.env.JWT_SECRET || 'your-secret-key',
         jwtExpiration: process.env.JWT_EXPIRATION || '24h',
-        redisUrl: process.env.REDIS_URL || 'redis://localhost:6379',
+        redisUrl: process.env.REDIS_URL || 'redis://redis:6379',
         
         public: {
             apiBase: ''

@@ -5,7 +5,7 @@ WORKDIR /app
 # Dependencies stage
 FROM base AS deps
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --omit=dev
 
 # Build stage
 FROM base AS builder
@@ -27,6 +27,8 @@ ENV NODE_ENV=production
 COPY --from=builder /app/.output ./.output
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
+# Include production dependencies so runtime has binaries like `tsx` for seeding
+COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
