@@ -13,6 +13,10 @@ export default defineEventHandler(async (event) => {
       },
       servers: [
           {
+              url: process.env.CORS_ORIGIN,
+              description: "Live server",
+          },
+          {
               url: "http://localhost:3000",
               description: "Development server",
           },
